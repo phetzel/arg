@@ -1,10 +1,11 @@
 import React from 'react';
 
+import Mailer from './mailer/mailer';
+
 const App = () => {
-    alert('hit');
     return (
         <div>
-            <h1>React working</h1>
+            <Mailer />
         </div>
     )
 };

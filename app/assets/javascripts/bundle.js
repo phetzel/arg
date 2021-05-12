@@ -115,14 +115,82 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var _mailer_mailer__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./mailer/mailer */ "./frontend/components/mailer/mailer.jsx");
+
 
 
 var App = function App() {
-  alert('hit');
-  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("h1", null, "React working"));
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mailer_mailer__WEBPACK_IMPORTED_MODULE_1__.default, null));
 };
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (App);
+
+/***/ }),
+
+/***/ "./frontend/components/mailer/mailer.jsx":
+/*!***********************************************!*\
+  !*** ./frontend/components/mailer/mailer.jsx ***!
+  \***********************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var _util_email_api__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../util/email_api */ "./frontend/util/email_api.js");
+function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
+
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
+function _iterableToArrayLimit(arr, i) { var _i = arr && (typeof Symbol !== "undefined" && arr[Symbol.iterator] || arr["@@iterator"]); if (_i == null) return; var _arr = []; var _n = true; var _d = false; var _s, _e; try { for (_i = _i.call(arr); !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
+
+function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
+
+
+
+
+var Mailer = function Mailer() {
+  var _useState = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(""),
+      _useState2 = _slicedToArray(_useState, 2),
+      email = _useState2[0],
+      setEmail = _useState2[1];
+
+  var update = function update() {
+    return function (e) {
+      setEmail(e.currentTarget.value);
+    };
+  };
+
+  var handleSubmit = function handleSubmit() {
+    var emailObj = {};
+    emailObj['email'] = {};
+    emailObj['email']['email'] = email;
+    _util_email_api__WEBPACK_IMPORTED_MODULE_1__.default.createEmail(emailObj).then(function (res) {
+      console.log('success');
+      setEmail('');
+    }, function (err) {
+      console.log(err);
+    });
+  };
+
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+    className: "mailer"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("h1", null, "Mailing list"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("input", {
+    onChange: update(),
+    type: "text",
+    value: email
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", {
+    onClick: handleSubmit
+  }, "JOIN"));
+};
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Mailer);
 
 /***/ }),
 
@@ -149,6 +217,39 @@ var Root = function Root() {
 };
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Root);
+
+/***/ }),
+
+/***/ "./frontend/util/email_api.js":
+/*!************************************!*\
+  !*** ./frontend/util/email_api.js ***!
+  \************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+var createEmail = function createEmail(email) {
+  return $.ajax({
+    method: 'POST',
+    url: 'api/emails',
+    data: email
+  });
+};
+
+var deleteEmail = function deleteEmail(id) {
+  return $.ajax({
+    url: "/api/emails/".concat(id),
+    method: 'DELETE'
+  });
+};
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  createEmail: createEmail,
+  deleteEmail: deleteEmail
+});
 
 /***/ }),
 
